@@ -27,12 +27,12 @@ export class ChatGPTApi implements LLMApi {
     return res.choices?.at(0)?.message?.content ?? "";
   }
 
-  
+  async chat(options: ChatOptions) {
     // Check if the last message (user's input) is a predefined keyword
     if (promptConfig.keywords[options.messages[options.messages.length - 1].content]) {
-        options.messages[options.messages.length - 1].content = promptConfig.keywords[options.messages[options.messages.length - 1].content].initialization;
+      options.messages[options.messages.length - 1].content = promptConfig.keywords[options.messages[options.messages.length - 1].content].initialization;
     }
-async chat(options: ChatOptions) {
+
     const messages = options.messages.map((v) => ({
       role: v.role,
       content: v.content,
@@ -164,10 +164,11 @@ async chat(options: ChatOptions) {
         options.onFinish(message);
       }
     } catch (e) {
-      console.log("[Request] failed to make a chat reqeust", e);
+      console.log("[Request] failed to make a chat request", e);
       options.onError?.(e as Error);
     }
   }
+
   async usage() {
     const formatDate = (d: Date) =>
       `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, "0")}-${d
