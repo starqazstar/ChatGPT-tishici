@@ -10,6 +10,19 @@ import {
 } from "@fortaine/fetch-event-source";
 import { prettyObject } from "@/app/utils/format";
 
+// 定义 PromptConfig 类型
+interface PromptConfig {
+  keywords: {
+    [key: string]: {
+      initialization: string;
+      // 其他可能的属性...
+    };
+  };
+  // 其他可能的属性...
+}
+
+const promptConfig: PromptConfig = require("../../config/promptConfig.json");
+
 export class ChatGPTApi implements LLMApi {
   public ChatPath = "v1/chat/completions";
   public UsagePath = "dashboard/billing/usage";
