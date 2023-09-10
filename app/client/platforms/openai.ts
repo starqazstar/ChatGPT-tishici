@@ -20,9 +20,6 @@ interface PromptConfig {
   // 其他可能的属性...
 }
 
-// 移除下面这行代码，因为已经在上面的 import 中导入了 promptConfig
-// const promptConfig: PromptConfig = require("../../config/promptConfig.json");
-
 export class ChatGPTApi implements LLMApi {
   public ChatPath = "v1/chat/completions";
   public UsagePath = "dashboard/billing/usage";
@@ -41,8 +38,6 @@ export class ChatGPTApi implements LLMApi {
   }
 
   async chat(options: ChatOptions) {
-    // Check if the last message (user's input) is a predefined keyword
-    // 移动下面这段代码到这里
     const promptConfig: PromptConfig = require("../../config/promptConfig.json");
     if (promptConfig.keywords[options.messages[options.messages.length - 1].content]) {
       options.messages[options.messages.length - 1].content = promptConfig.keywords[options.messages[options.messages.length - 1].content].initialization;
